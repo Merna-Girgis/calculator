@@ -1,0 +1,173 @@
+          symbol table
+        name      address
+        prog1      00000
+        inlp1      00000
+        inlp2      0000E
+        inlp3      00017
+        out1       00029
+        out2       00037
+        inlp4      00044
+        inlp5      0004D
+        out3       0005F
+        out4       0006F
+        loop1      000A4
+        loop2      000AB
+        loop3      000B2
+        loop4      000B9
+        loop5      000C0
+        loop6      000CD
+        lp1        000D4
+        lp2        000E3
+        outlp1     000E6
+        onedig     000F8
+        monedig1   00101
+        monedig2   00114
+        exit       0012C
+        plus       00132
+        minus      00135
+        multi      00138
+        divi       0013B
+        mod        0013E
+        pow        00141
+        eq         00144
+        devf3      00145
+        dev05      00146
+        op         00147
+        op1        00148
+        op2        00149
+        data       0014A
+
+     p r o g r a m     l i s t i n g
+
+00000        prog1    start  0                                                
+00000 E32142 inlp1    td     devf3                                            
+00003 332FFA          jeq    inlp1                                            
+00006 DB213C          rd     devf3                                            
+00009 57213B          stch   op                                               
+0000C AC05            rmo    a,t                                              
+0000E E32134 inlp2    td     devf3                                            
+00011 332FFA          jeq    inlp2                                            
+00014 DB212E          rd     devf3                                            
+00017 E3212B inlp3    td     devf3                                            
+0001A 332FFA          jeq    inlp3                                            
+0001D B400            clear  a                                                
+0001F DB2123          rd     devf3                                            
+00022 1D0030          sub   #48                                               
+00025 AC01            rmo    a,x                                              
+00027 B400            clear  a                                                
+00029 E3211A out1     td     dev05                                            
+0002C 332FFA          jeq    out1                                             
+0002F AC10            rmo    x,a                                              
+00031 190030          add   #48                                               
+00034 DF210F          wd     dev05                                            
+00037 E3210C out2     td     dev05                                            
+0003A 332FFA          jeq    out2                                             
+0003D AC50            rmo    t,a                                              
+0003F DF2104          wd     dev05                                            
+00042 B400            clear  a                                                
+00044 E320FE inlp4    td     devf3                                            
+00047 332FFA          jeq    inlp4                                            
+0004A DB20F8          rd     devf3                                            
+0004D E320F5 inlp5    td     devf3                                            
+00050 332FFA          jeq    inlp5                                            
+00053 B400            clear  a                                                
+00055 DB20ED          rd     devf3                                            
+00058 1D0030          sub   #48                                               
+0005B AC04            rmo    a,s                                              
+0005D B400            clear  a                                                
+0005F E320E4 out3     td     dev05                                            
+00062 332FFA          jeq    out3                                             
+00065 AC40            rmo    s,a                                              
+00067 190030          add   #48                                               
+0006A DF20D9          wd     dev05                                            
+0006D B400            clear  a                                                
+0006F E320D4 out4     td     dev05                                            
+00072 332FFA          jeq    out4                                             
+00075 5320CC          ldch   eq                                               
+00078 DF20CB          wd     dev05                                            
+0007B B400            clear  a                                                
+0007D 5320C7          ldch   op                                               
+00080 2B20AF          comp   plus                                             
+00083 33201E          jeq    loop1                                            
+00086 2B20AC          comp   minus                                            
+00089 33201F          jeq    loop2                                            
+0008C 2B20A9          comp   multi                                            
+0008F 332020          jeq    loop3                                            
+00092 2B20A6          comp   divi                                             
+00095 332021          jeq    loop4                                            
+00098 2B20A3          comp   mod                                              
+0009B 332022          jeq    loop5                                            
+0009E 2B20A0          comp   pow                                              
+000A1 332029          jeq    loop6                                            
+000A4 9041   loop1    addr   s,x                                              
+000A6 AC10            rmo    x,a                                              
+000A8 4B203B          jsub   outlp1                                           
+000AB 9441   loop2    subr   s,x                                              
+000AD AC10            rmo    x,a                                              
+000AF 4B2034          jsub   outlp1                                           
+000B2 9841   loop3    mulr   s,x                                              
+000B4 AC10            rmo    x,a                                              
+000B6 4B202D          jsub   outlp1                                           
+000B9 9C41   loop4    divr   s,x                                              
+000BB AC10            rmo    x,a                                              
+000BD 4B2026          jsub   outlp1                                           
+000C0 AC15   loop5    rmo    x,t                                              
+000C2 9C41            divr   s,x                                              
+000C4 9841            mulr   s,x                                              
+000C6 9415            subr   x,t                                              
+000C8 AC50            rmo    t,a                                              
+000CA 4B2019          jsub   outlp1                                           
+000CD AC15   loop6    rmo    x,t                                              
+000CF AC13            rmo    x,b                                              
+000D1 050001          ldx   #1                                                
+000D4 9835   lp1      mulr   b,t                                              
+000D6 AC50            rmo    t,a                                              
+000D8 B840            tixr   s                                                
+000DA 3B2FF7          jlt    lp1                                              
+000DD 372003          jgt    lp2                                              
+000E0 332000          jeq    lp2                                              
+000E3 4B2000 lp2      jsub   outlp1                                           
+000E6 E3205D outlp1   td     dev05                                            
+000E9 332FFA          jeq    outlp1                                           
+000EC 290009          comp  #9                                                
+000EF 3B2006          jlt    onedig                                           
+000F2 332003          jeq    onedig                                           
+000F5 372009          jgt    monedig1                                         
+000F8 190030 onedig   add   #48                                               
+000FB DF2048          wd     dev05                                            
+000FE 4B202B          jsub   exit                                             
+00101 E32042 monedig1 td     dev05                                            
+00104 332FFA          jeq    monedig1                                         
+00107 AC04            rmo    a,s                                              
+00109 AC05            rmo    a,t                                              
+0010B 25000A          div   #10                                               
+0010E 190030          add   #48                                               
+00111 DF2032          wd     dev05                                            
+00114 E3202F monedig2 td     dev05                                            
+00117 332FFA          jeq    monedig2                                         
+0011A AC40            rmo    s,a                                              
+0011C 25000A          div   #10                                               
+0011F 21000A          mul   #10                                               
+00122 9405            subr   a,t                                              
+00124 AC50            rmo    t,a                                              
+00126 190030          add   #48                                               
+00129 DF201A          wd     dev05                                            
+0012C 190000 exit     add   #0                                                
+0012F 3F2FFD          j      *                                                
+00132 00002B plus     word   43                                               
+00135 00002D minus    word   45                                               
+00138 00002A multi    word   42                                               
+0013B 00002F divi     word   47                                               
+0013E 000025 mod      word   37                                               
+00141 00005E pow      word   94                                               
+00144 3D     eq       byte   X'3D'                                            
+00145 F3     devf3    byte   X'F3'                                            
+00146 05     dev05    byte   X'05'                                            
+00147        op       resb   1                                                
+00148        op1      resb   1                                                
+00149        op2      resb   1                                                
+0014A        data     resb   1                                                
+0014B                 end                                                     
+
+  s u c c e s s f u l    a s s e m b l y
+e  n  d      o  f      p  r  o  g  r  a  m
